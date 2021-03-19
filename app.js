@@ -3,6 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
 const methodOverride = require('method-override');
+const ejsMate = require('ejs-mate');
 
 const port = 3000;
 const app = express();
@@ -17,12 +18,14 @@ db.once('open', () => {
     console.log('Database Connected');
 });
 
+//Set ejsMate as an engine for ejs
+app.engine('ejs', ejsMate);
 //Set EJS as a view engine
 app.set('view engine', 'ejs');
 //Set a path to views folder
 app.set('views', path.join(__dirname, '/views'));
 
-//Middleware 
+//Middleware
 // code the info coming from form
 app.use(express.urlencoded({ extended: true }));
 // override with ?_method=
@@ -41,7 +44,7 @@ app.get('/campgrounds/new', (req, res) => {
 app.post('/campgrounds', async (req, res) => {
     const campground = new Campground(req.body.campground);
     await campground.save();
-    res.redirect(`campgrounds/${campground._id}`);
+    res.redirect(`campgrounds`);
 })
 
 //Edit an specific campground
