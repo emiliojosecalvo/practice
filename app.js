@@ -15,9 +15,6 @@ const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 
-const port = 3000;
-const app = express();
-
 //Set the path to the database
 mongoose.connect('mongodb://localhost:27017/yelpcamp', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false });
 
@@ -27,6 +24,9 @@ db.on('error', console.error.bind(console, "connection error:"));
 db.once('open', () => {
     console.log('Database Connected');
 });
+
+const port = 3000;
+const app = express();
 
 //Set ejsMate as an engine for ejs
 app.engine('ejs', ejsMate);
@@ -66,7 +66,11 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-    if (!['/', '/login'].includes(originalUrl)) {
+    // if (!['/', '/login'].includes(originalUrl)) {
+    //     req.session.returnTo = req.originalUrl;
+    // }
+    if (!['/login', '/register', '/', '/logout'].includes(req.originalUrl)) {
+        // console.log(req.originalUrl);
         req.session.returnTo = req.originalUrl;
     }
     res.locals.currentUser = req.user;
@@ -74,6 +78,8 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     next();
 })
+
+
 
 app.use('/', userRoutes);
 app.use('/campgrounds', campgroundRoutes);
