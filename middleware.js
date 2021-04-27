@@ -2,7 +2,6 @@ const { campgroundSchema, reviewSchema } = require('./schemas.js');
 const Campground = require('./models/campground')
 const Review = require('./models/review')
 
-
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.flash('error', 'You Must be signed in');
