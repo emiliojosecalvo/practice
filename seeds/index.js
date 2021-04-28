@@ -3,7 +3,7 @@ const Campground = require('../models/campground');
 const cities = require('./cities');
 const { descriptors, places } = require('./seedHelpers');
 
-//Set the path to the database
+//Set the path to the database  
 mongoose.connect('mongodb://localhost:27017/yelpcamp', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 
 //connect to the database 
@@ -25,6 +25,10 @@ const seedDB = async () => {
             title: (`${descriptors[randomtitle]} , ${places[randomtitle]}`),
             description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta non ipsa odio maxime optio quis eligendi quo ut facere blanditiis, doloremque fuga provident! Nisi, neque quas ducimus numquam suscipit possimus!',
             price,
+            geometry: {
+                type: "Point",
+                coordinates: [-113.1331, 47.0202]
+            },
             images: [
                 {
                     url: 'https://res.cloudinary.com/dufhvg67l/image/upload/v1619529739/yelpcamp/amegg4d64lolckexgbpv.jpg',
