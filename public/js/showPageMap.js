@@ -9,6 +9,9 @@ const map = new mapboxgl.Map({
     zoom: 7 // starting zoom
 });
 
+//add controls to the map
+map.addControl(new mapboxgl.NavigationControl());
+
 const marker = new mapboxgl.Marker()
     .setLngLat(goodCampground.geometry.coordinates)
     .setPopup(

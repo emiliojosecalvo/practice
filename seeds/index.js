@@ -15,7 +15,7 @@ db.once('open', () => {
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 400; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
         const randomtitle = Math.floor(Math.random() * 18);
         const price = Math.floor(Math.random() * 20) + 10;
@@ -27,7 +27,10 @@ const seedDB = async () => {
             price,
             geometry: {
                 type: "Point",
-                coordinates: [-113.1331, 47.0202]
+                coordinates: [
+                    cities[random1000].longitude,
+                    cities[random1000].latitude
+                ]
             },
             images: [
                 {
